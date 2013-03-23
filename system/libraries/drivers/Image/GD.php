@@ -253,7 +253,8 @@ class Image_GD_Driver extends Image_Driver {
 			}
 
 			// Create the temporary image to copy to
-			$img = $this->imagecreatetransparent($pre_width, $pre_height);
+			//$img = $this->imagecreatetransparent($pre_width, $pre_height);
+			$img = $this->imagecreatetruecolor($pre_width, $pre_height);
 
 			if ($status = imagecopyresized($img, $this->tmp_image, 0, 0, 0, 0, $pre_width, $pre_height, $width, $height))
 			{
@@ -268,7 +269,8 @@ class Image_GD_Driver extends Image_Driver {
 		}
 
 		// Create the temporary image to copy to
-		$img = $this->imagecreatetransparent($properties['width'], $properties['height']);
+		//$img = $this->imagecreatetransparent($properties['width'], $properties['height']);
+		$img = $this->imagecreatetruecolor($properties['width'], $properties['height']);
 
 		// Execute the resize
 		if ($status = imagecopyresampled($img, $this->tmp_image, 0, 0, 0, 0, $properties['width'], $properties['height'], $width, $height))
