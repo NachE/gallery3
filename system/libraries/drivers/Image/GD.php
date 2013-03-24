@@ -71,7 +71,7 @@ class Image_GD_Driver extends Image_Driver {
 
 		// Load the image
 		$this->image = $image;
-
+		print_r($image);
 		// Create the GD image resource
 		$this->tmp_image = $create($image['file']);
 
@@ -87,8 +87,8 @@ class Image_GD_Driver extends Image_Driver {
 			switch ($save)
 			{
 				case 'imagejpeg':
-					// Default the quality to 95
-					($quality === NULL) and $quality = 95;
+					// Default the quality to 99
+					($quality === NULL) and $quality = 99;
 				break;
 				case 'imagegif':
 					// Remove the quality setting, GIF doesn't use it
@@ -253,8 +253,8 @@ class Image_GD_Driver extends Image_Driver {
 			}
 
 			// Create the temporary image to copy to
-			//$img = $this->imagecreatetransparent($pre_width, $pre_height);
-			$img = $this->imagecreatetruecolor($pre_width, $pre_height);
+			$img = $this->imagecreatetransparent($pre_width, $pre_height);
+			//$img = $this->imagecreatetruecolor($pre_width, $pre_height);
 
 			if ($status = imagecopyresized($img, $this->tmp_image, 0, 0, 0, 0, $pre_width, $pre_height, $width, $height))
 			{
@@ -269,8 +269,7 @@ class Image_GD_Driver extends Image_Driver {
 		}
 
 		// Create the temporary image to copy to
-		//$img = $this->imagecreatetransparent($properties['width'], $properties['height']);
-		$img = $this->imagecreatetruecolor($properties['width'], $properties['height']);
+		$img = $this->imagecreatetransparent($properties['width'], $properties['height']);
 
 		// Execute the resize
 		if ($status = imagecopyresampled($img, $this->tmp_image, 0, 0, 0, 0, $properties['width'], $properties['height'], $width, $height))
@@ -409,6 +408,12 @@ class Image_GD_Driver extends Image_Driver {
 			$height = 1;
 		}
 
+		if ($this->image['type'] == IMAGETYPE_JPEG)
+		{
+			return imagecreatetruecolor($width, $height);
+		}
+
+
 		if (self::$blank_png === NULL)
 		{
 			// Decode the blank PNG if it has not been done already
@@ -428,7 +433,8 @@ class Image_GD_Driver extends Image_Driver {
 		}
 
 		$img = imagecreatetruecolor($width, $height);
-
+		
+		
 		// Resize the blank image
 		imagecopyresized($img, self::$blank_png, 0, 0, 0, 0, $width, $height, self::$blank_png_width, self::$blank_png_height);
 
