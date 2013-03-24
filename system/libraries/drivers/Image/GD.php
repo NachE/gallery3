@@ -71,7 +71,7 @@ class Image_GD_Driver extends Image_Driver {
 
 		// Load the image
 		$this->image = $image;
-		print_r($image);
+		//print_r($image);
 		// Create the GD image resource
 		$this->tmp_image = $create($image['file']);
 
@@ -407,6 +407,7 @@ class Image_GD_Driver extends Image_Driver {
 		{
 			$height = 1;
 		}
+
 
 		if ($this->image['type'] == IMAGETYPE_JPEG)
 		{
